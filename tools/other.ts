@@ -797,9 +797,9 @@ export const other: DockerTool[] = [
   {
     id: "betterbahn",
     name: "Better Bahn",
-    description: "Better Bahn - A tool for monitoring and tracking TV shows.",
-    category: "Media",
-    tags: ["TV", "PVR", "Monitoring"],
+    description: "Better Bahn - A German train schedule and public transit app for self-hosting. Track Deutsche Bahn departures, arrivals, and connections from your own infrastructure.",
+    category: "Other",
+    tags: ["Transit", "Train", "Public Transport", "Germany"],
     githubUrl: "https://github.com/l2xu/betterbahn",
     composeContent: `services:
   betterbahn:
