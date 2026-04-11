@@ -347,4 +347,25 @@ export const automation: DockerTool[] = [
       - \${DATA_PATH}:/data
     restart: \${RESTART_POLICY}`,
   },
+  {
+    id: "profilarr",
+    name: "Profilarr",
+    description:
+      "Configuration management tool for Radarr and Sonarr that automates importing and version control of custom formats and quality profiles from the Dictionarry database.",
+    category: "Media",
+    tags: ["Management", "Radarr", "Sonarr", "Quality Profiles"],
+    githubUrl: "https://github.com/Dictionarry-Hub/profilarr",
+    icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/profilarr.svg",
+    composeContent: `services:
+  profilarr:
+    image: santiagosayshey/profilarr:latest
+    container_name: \${CONTAINER_PREFIX}profilarr
+    ports:
+      - "6868:6868"
+    volumes:
+      - \${CONFIG_PATH}/profilarr:/config
+    environment:
+      - TZ=\${TZ}
+    restart: \${RESTART_POLICY}`,
+  },
 ]
