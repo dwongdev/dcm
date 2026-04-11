@@ -280,4 +280,32 @@ export const management: DockerTool[] = [
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: \${RESTART_POLICY}`,
   },
+  {
+    id: "zoraxy",
+    name: "Zoraxy",
+    description:
+      "All-in-one homelab network tool providing reverse proxy, HTTP redirections, geo-IP blocking, global area network, web SSH terminal, real-time statistics, and port scanning utilities.",
+    category: "Networking",
+    tags: ["Reverse Proxy", "DNS", "SSL", "Network", "Security"],
+    githubUrl: "https://github.com/tobychui/zoraxy",
+    icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/zoraxy.svg",
+    composeContent: `services:
+  zoraxy:
+    image: zoraxydocker/zoraxy:latest
+    container_name: \${CONTAINER_PREFIX}zoraxy
+    ports:
+      - "8000:8000"
+      - "80:80"
+      - "443:443"
+    environment:
+      - FASTGEOIP=true
+      - TZ=\${TZ}
+    volumes:
+      - \${CONFIG_PATH}/zoraxy:/opt/zoraxy/config
+      - /etc/localtime:/etc/localtime
+      - /var/run/docker.sock:/var/run/docker.sock
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: \${RESTART_POLICY}`,
+  },
 ]
