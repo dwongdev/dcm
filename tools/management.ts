@@ -205,4 +205,30 @@ export const management: DockerTool[] = [
       - CRON=0 * * * *
     restart: \${RESTART_POLICY}`,
   },
+  {
+    id: "panelio",
+    name: "Panelio",
+    description:
+      "Self-hosted services dashboard with a built-in web admin UI. Forked from Homepage, it adds web-based management for services, bookmarks, widgets, and settings — no more hand-editing YAML.",
+    category: "Management",
+    tags: ["Dashboard", "Homepage", "Management", "Services"],
+    githubUrl: "https://github.com/Vellis59/panelio",
+    icon: "https://raw.githubusercontent.com/Vellis59/panelio/main/public/logo.svg",
+    composeContent: `services:
+  panelio:
+    image: ghcr.io/vellis59/panelio:latest
+    container_name: \${CONTAINER_PREFIX}panelio
+    ports:
+      - "3011:3000"
+    environment:
+      - HOMEPAGE_ALLOWED_HOSTS=localhost
+      - PANELIO_ADMIN_PASSWORD=\${PANELIO_ADMIN_PASSWORD}
+      - PUID=\${PUID}
+      - PGID=\${PGID}
+      - TZ=\${TZ}
+    volumes:
+      - \${CONFIG_PATH}/panelio:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: \${RESTART_POLICY}`,
+  },
 ]
