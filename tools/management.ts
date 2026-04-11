@@ -308,4 +308,30 @@ export const management: DockerTool[] = [
       - "host.docker.internal:host-gateway"
     restart: \${RESTART_POLICY}`,
   },
+  {
+    id: "arcane",
+    name: "Arcane",
+    description:
+      "Simple and elegant Docker Management UI written in TypeScript and SvelteKit. Provides an intuitive interface for managing Docker containers, images, volumes, networks, and stacks.",
+    category: "Management",
+    tags: ["UI", "Management", "Docker", "Dashboard"],
+    githubUrl: "https://github.com/ofkm/arcane",
+    icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/arcane.svg",
+    composeContent: `services:
+  arcane:
+    image: ghcr.io/ofkm/arcane:latest
+    container_name: \${CONTAINER_PREFIX}arcane
+    ports:
+      - "3000:3000"
+    environment:
+      - PUID=\${PUID}
+      - PGID=\${PGID}
+      - TZ=\${TZ}
+      - APP_ENV=production
+      - PUBLIC_SESSION_SECRET=\${PUBLIC_SESSION_SECRET}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - \${DATA_PATH}/arcane:/app/data
+    restart: \${RESTART_POLICY}`,
+  },
 ]
