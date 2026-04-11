@@ -836,4 +836,39 @@ export const other: DockerTool[] = [
       - "3000:80"
     restart: \${RESTART_POLICY}`,
   },
+  {
+    id: "shadowbroker",
+    name: "Shadowbroker",
+    description:
+      "OSINT intelligence platform for tracking ships, flights, and surveillance camera feeds. Streams real-time AIS vessel data, live flight tracking, and Singapore CCTV footage through a unified frontend.",
+    category: "Other",
+    tags: ["OSINT", "Tracking", "Intelligence", "AIS"],
+    githubUrl: "https://github.com/BigBodyCobain/Shadowbroker",
+    composeContent: `services:
+  shadowbroker-backend:
+    image: ghcr.io/bigbodycobain/shadowbroker-backend:latest
+    container_name: \${CONTAINER_PREFIX}shadowbroker-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - AIS_API_KEY=\${AIS_API_KEY}
+      - OPENSKY_CLIENT_ID=\${OPENSKY_CLIENT_ID}
+      - OPENSKY_CLIENT_SECRET=\${OPENSKY_CLIENT_SECRET}
+      - LTA_ACCOUNT_KEY=\${LTA_ACCOUNT_KEY}
+      - CORS_ORIGINS=\${CORS_ORIGINS}
+    volumes:
+      - \${DATA_PATH}/shadowbroker:/app/data
+    restart: \${RESTART_POLICY}
+
+  shadowbroker-frontend:
+    image: ghcr.io/bigbodycobain/shadowbroker-frontend:latest
+    container_name: \${CONTAINER_PREFIX}shadowbroker-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - BACKEND_URL=http://shadowbroker-backend:8000
+    depends_on:
+      - shadowbroker-backend
+    restart: \${RESTART_POLICY}`,
+  },
 ]
