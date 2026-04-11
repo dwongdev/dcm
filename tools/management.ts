@@ -254,4 +254,30 @@ export const management: DockerTool[] = [
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: \${RESTART_POLICY}`,
   },
+  {
+    id: "portracker",
+    name: "Portracker",
+    description:
+      "Open-source, self-hosted dashboard for homelabs and Docker environments that automatically discovers services and their ports. Provides a real-time network map and prevents port conflicts.",
+    category: "Networking",
+    tags: ["Monitoring", "Dashboard", "Network", "Ports", "Docker"],
+    githubUrl: "https://github.com/mostafa-wahied/portracker",
+    icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/portracker.svg",
+    composeContent: `services:
+  portracker:
+    image: mostafawahied/portracker:latest
+    container_name: \${CONTAINER_PREFIX}portracker
+    pid: "host"
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    ports:
+      - "4999:4999"
+    volumes:
+      - \${DATA_PATH}/portracker:/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: \${RESTART_POLICY}`,
+  },
 ]
