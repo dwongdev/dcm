@@ -184,4 +184,25 @@ export const management: DockerTool[] = [
       - DOCKGE_STACKS_DIR=/opt/stacks
       - DOCKGE_ENABLE_CONSOLE=true`,
   },
+  {
+    id: "nebula-sync",
+    name: "Nebula Sync",
+    description:
+      "Synchronize Pi-hole v6.x configuration across multiple replicas automatically. Keeps your primary Pi-hole in sync with secondary instances via scheduled CRON jobs.",
+    category: "Networking",
+    tags: ["Ad Blocking", "DNS", "Pi-hole", "Sync"],
+    githubUrl: "https://github.com/lovelaze/nebula-sync",
+    icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/nebula-sync.svg",
+    composeContent: `services:
+  nebula-sync:
+    image: ghcr.io/lovelaze/nebula-sync:latest
+    container_name: \${CONTAINER_PREFIX}nebula-sync
+    environment:
+      - PRIMARY=http://ph1.example.com|password
+      - REPLICAS=http://ph2.example.com|password,http://ph3.example.com|password
+      - FULL_SYNC=true
+      - RUN_GRAVITY=true
+      - CRON=0 * * * *
+    restart: \${RESTART_POLICY}`,
+  },
 ]
