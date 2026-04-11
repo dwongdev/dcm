@@ -871,4 +871,38 @@ export const other: DockerTool[] = [
       - shadowbroker-backend
     restart: \${RESTART_POLICY}`,
   },
+  {
+    id: "authentik",
+    name: "Authentik",
+    description:
+      "Open-source Identity Provider focused on flexibility and versatility. Supports SAML, OAuth2, LDAP, and more. Provides SSO, multi-factor authentication, and user provisioning. Navigate to /if/flow/initial-setup/ for first-time setup.",
+    category: "Security",
+    tags: ["Security", "SSO", "Identity Provider", "OAuth2", "SAML"],
+    githubUrl: "https://github.com/goauthentik/authentik",
+    icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/authentik.svg",
+    composeContent: `services:
+  authentik:
+    image: ghcr.io/goauthentik/server:latest
+    container_name: \${CONTAINER_PREFIX}authentik
+    command: server
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+    environment:
+      - TZ=\${TZ}
+      - AUTHENTIK_REDIS__HOST=\${REDIS_HOST}
+      - AUTHENTIK_POSTGRESQL__HOST=\${POSTGRESQL_HOST}
+      - AUTHENTIK_POSTGRESQL__USER=\${POSTGRESQL_USERNAME}
+      - AUTHENTIK_POSTGRESQL__NAME=\${POSTGRESQL_DATABASE_NAME}
+      - AUTHENTIK_POSTGRESQL__PASSWORD=\${POSTGRESQL_USER_PASSWORD}
+      - AUTHENTIK_SECRET_KEY=\${AUTHENTIK_SECRET_KEY}
+      - AUTHENTIK_BOOTSTRAP_PASSWORD=\${AUTHENTIK_BOOTSTRAP_PASSWORD}
+      - AUTHENTIK_BOOTSTRAP_TOKEN=\${AUTHENTIK_BOOTSTRAP_TOKEN}
+      - AUTHENTIK_BOOTSTRAP_EMAIL=\${AUTHENTIK_BOOTSTRAP_EMAIL}
+    volumes:
+      - \${CONFIG_PATH}/authentik/media:/media
+      - \${CONFIG_PATH}/authentik/templates:/templates
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: \${RESTART_POLICY}`,
+  },
 ]
