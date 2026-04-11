@@ -368,4 +368,24 @@ export const automation: DockerTool[] = [
       - TZ=\${TZ}
     restart: \${RESTART_POLICY}`,
   },
+  {
+    id: "healarr",
+    name: "Healarr",
+    description:
+      "Monitoring and auto-healing tool for the *arr suite (Sonarr, Radarr, etc.). Detects stalled downloads, missing media, and other issues, then automatically triggers corrective actions.",
+    category: "Media",
+    tags: ["TV", "PVR", "Monitoring", "Automation", "Sonarr", "Radarr"],
+    githubUrl: "https://github.com/mescon/healarr",
+    composeContent: `services:
+  healarr:
+    image: ghcr.io/mescon/healarr:latest
+    container_name: \${CONTAINER_PREFIX}healarr
+    ports:
+      - "3090:3090"
+    environment:
+      - TZ=\${TZ}
+    volumes:
+      - \${CONFIG_PATH}/healarr:/config
+    restart: \${RESTART_POLICY}`,
+  },
 ]
