@@ -820,4 +820,20 @@ export const other: DockerTool[] = [
     security_opt:
       - no-new-privileges=true`,
   },
+  {
+    id: "nowasp",
+    name: "NOWASP Mutillidae II",
+    description:
+      "OWASP Mutillidae II is a free, open-source, deliberately vulnerable web application for web security training. Provides hands-on experience with the OWASP Top 10 vulnerabilities in a safe, isolated environment.",
+    category: "Security",
+    tags: ["Security", "Pen Testing", "OWASP", "Training"],
+    githubUrl: "https://github.com/citizen-stig/dockermutillidae",
+    composeContent: `services:
+  nowasp:
+    image: citizenstig/nowasp
+    container_name: \${CONTAINER_PREFIX}nowasp
+    ports:
+      - "3000:80"
+    restart: \${RESTART_POLICY}`,
+  },
 ]
