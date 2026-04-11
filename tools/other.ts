@@ -934,4 +934,27 @@ export const other: DockerTool[] = [
       - /var/run/docker.sock:/var/run/docker.sock
     restart: \${RESTART_POLICY}`,
   },
+  {
+    id: "authentik-proxy",
+    name: "Authentik Proxy",
+    description:
+      "Outpost proxy component for Authentik that enforces authentication on upstream services. Sits in front of your applications to add SSO, MFA, and access control without modifying the apps themselves.",
+    category: "Security",
+    tags: ["Security", "Proxy", "Reverse Proxy", "SSO"],
+    githubUrl: "https://github.com/goauthentik/authentik",
+    icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/authentik.svg",
+    composeContent: `services:
+  authentik-proxy:
+    image: ghcr.io/goauthentik/proxy:latest
+    container_name: \${CONTAINER_PREFIX}authentik-proxy
+    ports:
+      - "\${AUTHENTIK_HTTP_PORT:-9000}:9000"
+      - "\${AUTHENTIK_HTTPS_PORT:-9443}:9443"
+    environment:
+      - TZ=\${TZ}
+      - AUTHENTIK_HOST=\${AUTHENTIK_HOST}
+      - AUTHENTIK_INSECURE=false
+      - AUTHENTIK_TOKEN=\${AUTHENTIK_TOKEN}
+    restart: \${RESTART_POLICY}`,
+  },
 ]
