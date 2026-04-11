@@ -957,4 +957,23 @@ export const other: DockerTool[] = [
       - AUTHENTIK_TOKEN=\${AUTHENTIK_TOKEN}
     restart: \${RESTART_POLICY}`,
   },
+  {
+    id: "octoeverywhere-elegoo-connect",
+    name: "OctoEverywhere Elegoo Connect",
+    description:
+      "OctoEverywhere companion container for Elegoo 3D printers. Bridges your Elegoo printer to OctoEverywhere's remote monitoring and control cloud platform, enabling access from anywhere.",
+    category: "Other",
+    tags: ["3D Printing", "Elegoo", "Remote Access", "IoT"],
+    githubUrl: "https://github.com/QuinnDamerell/OctoPrint-OctoEverywhere",
+    composeContent: `services:
+  octoeverywhere-elegoo-connect:
+    image: octoeverywhere/octoeverywhere:latest
+    container_name: \${CONTAINER_PREFIX}octoeverywhere-elegoo-connect
+    environment:
+      - COMPANION_MODE=elegoo
+      - PRINTER_IP=\${PRINTER_IP}
+    volumes:
+      - \${DATA_PATH}/octoeverywhere:/data
+    restart: \${RESTART_POLICY}`,
+  },
 ]
