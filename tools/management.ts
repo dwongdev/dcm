@@ -231,4 +231,27 @@ export const management: DockerTool[] = [
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: \${RESTART_POLICY}`,
   },
+  {
+    id: "autoxpose",
+    name: "Autoxpose",
+    description:
+      "Automatic DNS and reverse proxy configuration for Docker containers. Add a label to your container and autoxpose creates the DNS record and configures your reverse proxy with SSL — no manual setup required.",
+    category: "Networking",
+    tags: ["DNS", "Reverse Proxy", "Automation", "SSL"],
+    githubUrl: "https://github.com/mostafa-wahied/autoxpose",
+    icon: "https://github.com/mostafa-wahied/autoxpose/raw/main/packages/frontend/public/autoxpose-logo.svg",
+    composeContent: `services:
+  autoxpose:
+    image: mostafawahied/autoxpose:latest
+    container_name: \${CONTAINER_PREFIX}autoxpose
+    ports:
+      - "4949:3000"
+    environment:
+      - SERVER_IP=\${SERVER_IP}
+      - LAN_IP=\${LAN_IP}
+    volumes:
+      - \${DATA_PATH}/autoxpose:/app/packages/backend/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: \${RESTART_POLICY}`,
+  },
 ]
