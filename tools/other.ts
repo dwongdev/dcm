@@ -905,4 +905,33 @@ export const other: DockerTool[] = [
       - /var/run/docker.sock:/var/run/docker.sock
     restart: \${RESTART_POLICY}`,
   },
+  {
+    id: "authentik-worker",
+    name: "Authentik Worker",
+    description:
+      "Background worker component for the Authentik identity provider. Handles asynchronous tasks such as policy enforcement, flow execution, and scheduled maintenance. Requires a running Authentik server instance.",
+    category: "Security",
+    tags: ["Security", "SSO", "Identity Provider", "Worker"],
+    githubUrl: "https://github.com/goauthentik/authentik",
+    icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/authentik.svg",
+    composeContent: `services:
+  authentik-worker:
+    image: ghcr.io/goauthentik/server:latest
+    container_name: \${CONTAINER_PREFIX}authentik-worker
+    command: worker
+    environment:
+      - TZ=\${TZ}
+      - AUTHENTIK_REDIS__HOST=\${REDIS_HOST}
+      - AUTHENTIK_POSTGRESQL__HOST=\${POSTGRESQL_HOST}
+      - AUTHENTIK_POSTGRESQL__USER=\${POSTGRESQL_USERNAME}
+      - AUTHENTIK_POSTGRESQL__NAME=\${POSTGRESQL_DATABASE_NAME}
+      - AUTHENTIK_POSTGRESQL__PASSWORD=\${POSTGRESQL_USER_PASSWORD}
+      - AUTHENTIK_SECRET_KEY=\${AUTHENTIK_SECRET_KEY}
+    volumes:
+      - \${CONFIG_PATH}/authentik/media:/media
+      - \${CONFIG_PATH}/authentik/certs:/certs
+      - \${CONFIG_PATH}/authentik/templates:/templates
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: \${RESTART_POLICY}`,
+  },
 ]
