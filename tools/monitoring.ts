@@ -320,4 +320,33 @@ export const monitoring: DockerTool[] = [
       - /var/run/docker.sock:/var/run/docker.sock
     restart: \${RESTART_POLICY}`,
   },
+  {
+    id: "grafana-alloy",
+    name: "Alloy",
+    description:
+      "Grafana Alloy is an OpenTelemetry Collector distribution with built-in Prometheus pipelines. Scrape metrics, collect logs, and forward telemetry data to Grafana Cloud or any OTLP-compatible backend.",
+    category: "Monitoring",
+    tags: ["Monitoring", "Metrics", "OpenTelemetry", "Grafana"],
+    githubUrl: "https://github.com/grafana/alloy",
+    icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/grafana-alloy.svg",
+    composeContent: `services:
+  alloy:
+    image: grafana/alloy:2.0.5
+    container_name: \${CONTAINER_PREFIX}alloy
+    ports:
+      - "12345:12345"
+    environment:
+      - TZ=\${TZ}
+    volumes:
+      - \${CONFIG_PATH}/alloy/config.alloy:/etc/alloy/config.alloy:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/log:/var/log:ro
+      - \${DATA_PATH}/alloy:/var/lib/alloy/data
+    command:
+      - run
+      - --server.http.listen-addr=0.0.0.0:12345
+      - --storage.path=/var/lib/alloy/data
+      - /etc/alloy/config.alloy
+    restart: \${RESTART_POLICY}`,
+  },
 ]

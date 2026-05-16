@@ -347,4 +347,46 @@ export const automation: DockerTool[] = [
       - \${DATA_PATH}:/data
     restart: \${RESTART_POLICY}`,
   },
+  {
+    id: "profilarr",
+    name: "Profilarr",
+    description:
+      "Configuration management tool for Radarr and Sonarr that automates importing and version control of custom formats and quality profiles from the Dictionarry database.",
+    category: "Media",
+    tags: ["Management", "Radarr", "Sonarr", "Quality Profiles"],
+    githubUrl: "https://github.com/Dictionarry-Hub/profilarr",
+    icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/profilarr.svg",
+    composeContent: `services:
+  profilarr:
+    image: santiagosayshey/profilarr:latest
+    container_name: \${CONTAINER_PREFIX}profilarr
+    ports:
+      - "6868:6868"
+    volumes:
+      - \${CONFIG_PATH}/profilarr:/config
+    environment:
+      - TZ=\${TZ}
+    restart: \${RESTART_POLICY}`,
+  },
+  {
+    id: "healarr",
+    name: "Healarr",
+    description:
+      "Monitoring and auto-healing tool for the *arr suite (Sonarr, Radarr, etc.). Detects stalled downloads, missing media, and other issues, then automatically triggers corrective actions.",
+    category: "Media",
+    tags: ["TV", "PVR", "Monitoring", "Automation", "Sonarr", "Radarr"],
+    githubUrl: "https://github.com/mescon/healarr",
+    icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/healarr.svg",
+    composeContent: `services:
+  healarr:
+    image: ghcr.io/mescon/healarr:latest
+    container_name: \${CONTAINER_PREFIX}healarr
+    ports:
+      - "3090:3090"
+    environment:
+      - TZ=\${TZ}
+    volumes:
+      - \${CONFIG_PATH}/healarr:/config
+    restart: \${RESTART_POLICY}`,
+  },
 ]
