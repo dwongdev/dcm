@@ -21,9 +21,9 @@ export const monitoring: DockerTool[] = [
       - TZ=\${TZ}
       - SECRET_ENCRYPTION_KEY=your_64_character_hex_string
     ports:
-      - 3000:3000
+      - 7575:7575
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:7575/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3

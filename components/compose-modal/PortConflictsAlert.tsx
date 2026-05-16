@@ -27,7 +27,7 @@ function parseConflicts(conflicts: string[]) {
       }
       return null
     }).filter(Boolean) as { service: string; oldPort: string; newPort: string }[]
-    return { port, services, changes }
+    return { port, services, changes, raw: conflict, parsed: Boolean(portMatch) }
   })
 }
 
@@ -54,31 +54,39 @@ export default function PortConflictsAlert({
               key={`conflict-${i}`}
               className="rounded-md border border-amber-500/20 bg-background/50 p-2"
             >
-              <div className="mb-1 flex items-center gap-1.5 font-medium text-xs">
-                <AlertCircle className="h-3 w-3 text-amber-500" />
-                Port <span className="font-mono">{item.port}</span> was shared by:{" "}
-                {item.services.join(", ")}
-              </div>
-              {item.changes.length > 0 && (
-                <div className="space-y-0.5">
-                  {item.changes.map((change, j) => (
-                    <div
-                      key={`change-${j}`}
-                      className="flex items-center gap-1.5 text-xs"
-                    >
-                      <span className="font-medium text-muted-foreground">
-                        {change.service}:
-                      </span>
-                      <span className="rounded bg-destructive/15 px-1.5 py-0.5 font-mono text-destructive line-through">
-                        {change.oldPort}
-                      </span>
-                      <ArrowRight className="h-3 w-3 text-muted-foreground" />
-                      <span className="rounded bg-success/15 px-1.5 py-0.5 font-mono text-success">
-                        {change.newPort}
-                      </span>
+              {item.parsed ? (
+                <>
+                  <div className="mb-1 flex items-center gap-1.5 font-medium text-xs">
+                    <AlertCircle className="h-3 w-3 text-amber-500" />
+                    Port <span className="font-mono">{item.port}</span> was shared by:{" "}
+                    {item.services.join(", ")}
+                  </div>
+                  {item.changes.length > 0 && (
+                    <div className="space-y-0.5">
+                      {item.changes.map((change, j) => (
+                        <div
+                          key={`change-${j}`}
+                          className="flex items-center gap-1.5 text-xs"
+                        >
+                          <span className="font-medium text-muted-foreground">
+                            {change.service}:
+                          </span>
+                          <span className="rounded bg-destructive/15 px-1.5 py-0.5 font-mono text-destructive line-through">
+                            {change.oldPort}
+                          </span>
+                          <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                          <span className="rounded bg-success/15 px-1.5 py-0.5 font-mono text-success">
+                            {change.newPort}
+                          </span>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  )}
+                </>
+              ) : (
+                <pre className="mt-1 whitespace-pre-wrap rounded bg-muted/40 p-2 text-[11px] text-muted-foreground">
+                  {item.raw}
+                </pre>
               )}
             </div>
           ))}

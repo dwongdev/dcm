@@ -114,7 +114,8 @@ export const databases: DockerTool[] = [
       - MONGO_INITDB_DATABASE=admin
       - TZ=\${TZ}
     healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      test: ["CMD", "mongosh", "--username", "$MONGO_INITDB_ROOT_USERNAME", "--password", "$MONGO_INITDB_ROOT_PASSWORD", "--authenticationDatabase", "admin", "--eval", "db.adminCommand('ping').ok"]
+      start_period: 30s
       interval: 30s
       timeout: 10s
       retries: 3
