@@ -23,7 +23,7 @@ export const monitoring: DockerTool[] = [
     ports:
       - 7575:7575
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:7575/api/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:7575/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -56,10 +56,11 @@ export const monitoring: DockerTool[] = [
     environment:
       - TZ=\${TZ}
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
       interval: 30s
       timeout: 10s
       retries: 3
+      start_period: 40s
     restart: \${RESTART_POLICY}`,
   },
   {
@@ -128,12 +129,6 @@ export const monitoring: DockerTool[] = [
       - \${CONFIG_PATH}/uptime-kuma:/app/data
     ports:
       - 3001:3001
-    healthcheck:
-      test: ["CMD", "node", "/app/server/server.js", "--health-check"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 15s
     restart: \${RESTART_POLICY}`,
   },
   {
