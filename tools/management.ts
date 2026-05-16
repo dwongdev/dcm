@@ -284,7 +284,7 @@ export const management: DockerTool[] = [
     id: "zoraxy",
     name: "Zoraxy",
     description:
-      "All-in-one homelab network tool providing reverse proxy, HTTP redirections, geo-IP blocking, global area network, web SSH terminal, real-time statistics, and port scanning utilities.",
+      "All-in-one homelab network tool providing reverse proxy, HTTP redirections, geo-IP blocking, global area network, web SSH terminal, real-time statistics, and port scanning utilities. Note: Uses ports 80/443/8000 — ensure no other reverse proxy (nginx, caddy, traefik) or portainer is running on those ports.",
     category: "Networking",
     tags: ["Reverse Proxy", "DNS", "SSL", "Network", "Security"],
     githubUrl: "https://github.com/tobychui/zoraxy",
@@ -302,7 +302,6 @@ export const management: DockerTool[] = [
       - TZ=\${TZ}
     volumes:
       - \${CONFIG_PATH}/zoraxy:/opt/zoraxy/config
-      - /etc/localtime:/etc/localtime
       - /var/run/docker.sock:/var/run/docker.sock:ro
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -330,7 +329,7 @@ export const management: DockerTool[] = [
       - APP_ENV=production
       - PUBLIC_SESSION_SECRET=\${PUBLIC_SESSION_SECRET}
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       - \${DATA_PATH}/arcane:/app/data
     restart: \${RESTART_POLICY}`,
   },
