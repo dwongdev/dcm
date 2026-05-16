@@ -24,6 +24,12 @@ export const automation: DockerTool[] = [
       - \${DATA_PATH}:/data
     ports:
       - 8989:8989
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8989/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     restart: \${RESTART_POLICY}`,
   },
   {
@@ -49,6 +55,12 @@ export const automation: DockerTool[] = [
       - \${DATA_PATH}:/data
     ports:
       - 7878:7878
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7878/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     restart: \${RESTART_POLICY}`,
   },
   {
@@ -123,6 +135,12 @@ export const automation: DockerTool[] = [
       - \${CONFIG_PATH}/prowlarr:/config
     ports:
       - 9696:9696
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9696/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     restart: \${RESTART_POLICY}`,
   },
   {

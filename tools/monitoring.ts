@@ -21,32 +21,13 @@ export const monitoring: DockerTool[] = [
       - TZ=\${TZ}
       - SECRET_ENCRYPTION_KEY=your_64_character_hex_string
     ports:
-      - '7575:7575'
-    restart: \${RESTART_POLICY}`,
-  },
-  {
-    id: "grafana",
-    name: "Grafana",
-    description:
-      "The open and composable observability and data visualization platform. Visualize metrics, logs, and traces from multiple sources.",
-    category: "Monitoring",
-    tags: ["Monitoring", "Visualization", "Analytics"],
-    githubUrl: "https://github.com/grafana/grafana",
-    icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/grafana.svg",
-    composeContent: `services:
-  grafana:
-    image: grafana/grafana-enterprise
-    container_name: \${CONTAINER_PREFIX}grafana
-    ports:
-      - "3000:3000"
-    volumes:
-      - \${DATA_PATH}/grafana:/var/lib/grafana
-      - \${CONFIG_PATH}/grafana/provisioning:/etc/grafana/provisioning
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=your_password
-      - GF_USERS_ALLOW_SIGN_UP=false
-      - TZ=\${TZ}
+      - 3000:3000
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
     restart: \${RESTART_POLICY}`,
   },
   {
@@ -71,9 +52,14 @@ export const monitoring: DockerTool[] = [
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
     ports:
-      - "9090:9090"
+      - 9090:9090
     environment:
       - TZ=\${TZ}
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     restart: \${RESTART_POLICY}`,
   },
   {
@@ -142,6 +128,12 @@ export const monitoring: DockerTool[] = [
       - \${CONFIG_PATH}/uptime-kuma:/app/data
     ports:
       - 3001:3001
+    healthcheck:
+      test: ["CMD", "node", "/app/server/server.js", "--health-check"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
     restart: \${RESTART_POLICY}`,
   },
   {

@@ -1,4 +1,5 @@
 import { ContainerSubmissionForm } from "@/components/container-submission-form"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { GradientButton } from "@/components/ui/gradient-button"
 import { Heart } from "lucide-react"
 import { siGithub } from "simple-icons"
@@ -17,6 +18,7 @@ export function Header() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
+            <ThemeToggle />
             <ContainerSubmissionForm />
 
             <GradientButton
