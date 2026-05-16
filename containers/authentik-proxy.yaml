@@ -1,3 +1,3 @@
 name: Authentik-Proxy
 version: 3.0.0
-description: A container for Authentik proxy services
+description: Forward authentication proxy for protecting upstream applications with Authentik

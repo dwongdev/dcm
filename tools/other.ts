@@ -875,7 +875,7 @@ export const other: DockerTool[] = [
     id: "authentik",
     name: "Authentik",
     description:
-      "Open-source Identity Provider focused on flexibility and versatility. Supports SAML, OAuth2, LDAP, and more. Provides SSO, multi-factor authentication, and user provisioning. Navigate to /if/flow/initial-setup/ for first-time setup.",
+      "Open-source Identity Provider focused on flexibility and versatility. Supports SAML, OAuth2, LDAP, and more. Provides SSO, multi-factor authentication, and user provisioning. Requires external Redis and PostgreSQL instances. Navigate to /if/flow/initial-setup/ for first-time setup.",
     category: "Security",
     tags: ["Security", "SSO", "Identity Provider", "OAuth2", "SAML"],
     githubUrl: "https://github.com/goauthentik/authentik",

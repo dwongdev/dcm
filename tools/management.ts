@@ -198,8 +198,8 @@ export const management: DockerTool[] = [
     image: ghcr.io/lovelaze/nebula-sync:latest
     container_name: \${CONTAINER_PREFIX}nebula-sync
     environment:
-      - PRIMARY=http://ph1.example.com|password
-      - REPLICAS=http://ph2.example.com|password,http://ph3.example.com|password
+      - PRIMARY=\${NEBULA_PRIMARY:-http://ph1.example.com|password}
+      - REPLICAS=\${NEBULA_REPLICAS:-http://ph2.example.com|password,http://ph3.example.com|password}
       - FULL_SYNC=true
       - RUN_GRAVITY=true
       - CRON=0 * * * *
@@ -258,7 +258,7 @@ export const management: DockerTool[] = [
     id: "portracker",
     name: "Portracker",
     description:
-      "Open-source, self-hosted dashboard for homelabs and Docker environments that automatically discovers services and their ports. Provides a real-time network map and prevents port conflicts.",
+      "Open-source, self-hosted dashboard for homelabs and Docker environments that automatically discovers services and their ports. Provides a real-time network map and prevents port conflicts. Note: Requires elevated privileges (host PID namespace, SYS_PTRACE capability).",
     category: "Networking",
     tags: ["Monitoring", "Dashboard", "Network", "Ports", "Docker"],
     githubUrl: "https://github.com/mostafa-wahied/portracker",
@@ -303,7 +303,7 @@ export const management: DockerTool[] = [
     volumes:
       - \${CONFIG_PATH}/zoraxy:/opt/zoraxy/config
       - /etc/localtime:/etc/localtime
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: \${RESTART_POLICY}`,

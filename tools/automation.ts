@@ -376,6 +376,7 @@ export const automation: DockerTool[] = [
     category: "Media",
     tags: ["TV", "PVR", "Monitoring", "Automation", "Sonarr", "Radarr"],
     githubUrl: "https://github.com/mescon/healarr",
+    icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/healarr.svg",
     composeContent: `services:
   healarr:
     image: ghcr.io/mescon/healarr:latest
